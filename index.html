@@ -110,24 +110,136 @@
         }
         #dark-mode-toggle {
             position: fixed;
-            top: 20px;
+            top: auto;
+            bottom: 20px;
             right: 20px;
-            background-color: transparent;
+            background-color: var(--card-bg);
             color: var(--text-color);
             border: 2px solid var(--accent-color);
-            padding: 10px 15px;
-            border-radius: 25px;
+            padding: 12px;
+            border-radius: 50%;
             cursor: pointer;
             font-family: inherit;
             display: flex;
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
+
+        #dark-mode-toggle span {
+            display: none; /* Hide text on mobile */
+        }
+
         #dark-mode-toggle:hover {
-            background-color: var(--accent-color);
-            color: white;
+            transform: scale(1.1);
         }
+
+        /* Update responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            header {
+                margin-bottom: 30px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .project, .blog-card {
+                padding: 15px;
+            }
+
+            .skills-list {
+                gap: 15px;
+            }
+
+            .skill-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding-left: 0;
+            }
+
+            .skill-group h3 {
+                min-width: auto;
+                margin-bottom: 8px;
+            }
+
+            .skill-items {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .project-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .project-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Add tablet-specific styles */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            body {
+                padding: 20px;
+            }
+
+            #dark-mode-toggle {
+                padding: 10px 15px;
+                border-radius: 25px;
+            }
+
+            #dark-mode-toggle span {
+                display: inline; /* Show text on tablet */
+            }
+
+            .blog-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Add larger screen styles */
+        @media (min-width: 1025px) {
+            #dark-mode-toggle {
+                top: 20px;
+                bottom: auto;
+                padding: 10px 15px;
+                border-radius: 25px;
+            }
+
+            #dark-mode-toggle span {
+                display: inline; /* Show text on desktop */
+            }
+        }
+
+        /* Add touch-friendly styles */
+        @media (hover: none) {
+            .project:hover,
+            .blog-card:hover,
+            .skill-tag:hover {
+                transform: none;
+            }
+
+            .project-link:active,
+            .skill-tag:active {
+                background-color: var(--accent-color);
+                color: var(--bg-color);
+            }
+
+            #dark-mode-toggle:active {
+                transform: scale(0.95);
+            }
+        }
+
         .blog-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -431,7 +543,7 @@
                     <h3>Languages</h3>
                     <span class="skill-item">Python</span>
                     <span class="skill-item">Java</span>
-                    <span class="skill-item">SQL (PostgreSQL)</span>
+                    <span class="skill-item">SQL(PostgreSQL)</span>
                 </div>
                 <div class="skill-group">
                     <h3>Frameworks</h3>
@@ -532,6 +644,16 @@
             toggleIcon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
         }
 
+        // Add touch event handling
+        darkModeToggle.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent double-tap zoom on mobile
+            html.classList.toggle('dark-mode');
+            const isDark = html.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateIcon(isDark);
+        }, { passive: false });
+
+        // Keep click event for non-touch devices
         darkModeToggle.addEventListener('click', () => {
             html.classList.toggle('dark-mode');
             const isDark = html.classList.contains('dark-mode');
