@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhisek Das - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html {
+            --bg-color: #f0f0f0;
+            --text-color: #333;
+            --accent-color: #0066cc;
+            --card-bg: #fff;
+            --code-bg: #e0e0e0;
+            --category-bg: rgba(0, 102, 204, 0.1);
+            
+            background-color: var(--bg-color);
+            min-height: 100%;
+        }
+
+        html.dark-mode {
+            --bg-color: #1e1e1e;
+            --text-color: #f0f0f0;
+            --accent-color: #4da6ff;
+            --card-bg: #2d2d2d;
+            --code-bg: #3a3a3a;
+            --category-bg: rgba(77, 166, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, 
+                        color 0.3s ease, 
+                        border-color 0.3s ease, 
+                        transform 0.3s ease;
+        }
+
+        body {
+            font-family: 'Fira Code', monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            --bg-color: #1e1e1e;
+            --text-color: #f0f0f0;
+            --accent-color: #4da6ff;
+            --card-bg: #2d2d2d;
+            --code-bg: #3a3a3a;
+            --category-bg: rgba(77, 166, 255, 0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 30px;
+            border-bottom: 1px solid var(--text-color);
+            padding-bottom: 5px;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--accent-color);
+        }
+        .project {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .project:hover {
+            transform: translateY(-5px);
+        }
+        .project h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        .project p {
+            margin: 0 0 15px 0;
+        }
+        .contact {
+            text-align: center;
+            margin-top: 40px;
+        }
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        #dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: transparent;
+            color: var(--text-color);
+            border: 2px solid var(--accent-color);
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        #dark-mode-toggle:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .blog-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .blog-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .blog-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        .read-more {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .read-more:hover {
+            color: #0055aa;
+        }
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+        /* Terminal-style elements */
+        .terminal-prefix {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .terminal-prefix::before {
+            content: ">";
+            margin-right: 8px;
+        }
+
+        /* Matrix-inspired background for cards */
+        .project::before, .blog-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(0, 102, 204, 0.05) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(0, 102, 204, 0.05) 1px,
+                transparent 1px
+            );
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project:hover::before, .blog-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Update project and blog card styles */
+        .project, .blog-card {
+            position: relative;
+            border: 1px solid var(--accent-color);
+            background: var(--card-bg);
+            overflow: hidden;
+        }
+
+        .project::after, .blog-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-style: solid;
+            border-width: 0 25px 25px 0;
+            border-color: transparent var(--accent-color) transparent transparent;
+            opacity: 0.3;
+        }
+
+        /* Glitch effect for headings */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        h1:hover, h2:hover {
+            animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both;
+        }
+
+        /* Blinking cursor animation */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Skills tag style */
+        .skill-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 2px;
+            border: 1px solid var(--accent-color);
+            border-radius: 4px;
+            font-size: 0.9em;
+            background: var(--bg-color);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            transform: translateY(-2px);
+        }
+
+        /* Update code style */
+        code {
+            border: 1px solid var(--accent-color);
+            background-color: var(--code-bg);
+            color: var(--accent-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* New skills grid styling */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .skill-category {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .skill-category h3 {
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent-color);
+        }
+
+        .skill-tag:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            transform: translateY(-2px);
+        }
+
+        .project-links {
+            margin-top: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 5px 12px;
+            border: 1px solid var(--accent-color);
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .skill-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .skill-group h3 {
+            color: var(--accent-color);
+            font-size: 1.1em;
+            margin: 0;
+            min-width: 150px;
+            position: relative;
+        }
+
+        .skill-group h3::after {
+            content: "→";
+            margin-left: 10px;
+            color: var(--accent-color);
+            opacity: 0.7;
+        }
+
+        .skill-item {
+            background-color: rgba(0, 102, 204, 0.1);
+            color: var(--text-color);
+            padding: 3px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .skill-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .skill-group h3 {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button id="dark-mode-toggle">
+        <i class="fas fa-sun"></i>
+        <span>Light/Dark</span>
+    </button>
+    <header>
+        <h1>Abhisek Das</h1>
+        <p class="subtitle">Data Engineering | Machine Learning</p>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>As a final-year CS student diving deep into the data universe, I approach problems like a well-optimized algorithm: efficiently and with purpose. My sweet spot? Building scalable data pipelines that transform raw bits into actionable insights. Think less "black-box neural nets" and more "interpretable ML systems that actually make sense."</p>
+            <p>My approach? Start with the fundamentals, understand the math behind the magic, and build solutions that are reliable and scalable.</p>
+                    </section>
+
+        <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills-list">
+                <div class="skill-group">
+                    <h3>Languages</h3>
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">C++</span>
+                    <span class="skill-item">SQL</span>
+                </div>
+                <div class="skill-group">
+                    <h3>Frameworks</h3>
+                    <span class="skill-item">TensorFlow</span>
+                    <span class="skill-item">PyTorch</span>
+                    <span class="skill-item">Pandas</span>
+                    <span class="skill-item">NumPy</span>
+                </div>
+                <div class="skill-group">
+                    <h3>Tools & Platforms</h3>
+                    <span class="skill-item">AWS</span>
+                    <span class="skill-item">Google Cloud</span>
+                    <span class="skill-item">Git</span>
+                </div>
+                <div class="skill-group">
+                    <h3>Visualization</h3>
+                    <span class="skill-item">Matplotlib</span>
+                    <span class="skill-item">Seaborn</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>Real-time Fraud Detection System</h3>
+                <p>Developed a fraud detection system utilizing Apache Kafka and Spark Streaming to identify fraudulent transactions with high accuracy.</p>
+                <div class="project-links">
+                    <a href="projects/fraud-detection.html" class="project-link">
+                        <i class="fas fa-external-link-alt"></i> View Details
+                    </a>
+                    <a href="https://github.com/yourusername/fraud-detection" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i> Source Code
+                    </a>
+                </div>
+            </div>
+            <div class="project">
+                <h3>Building a Data Lake with AWS S3 and Athena</h3>
+                <p>Designed and implemented a data lake using AWS S3 and Athena, allowing for efficient querying and analysis of large datasets.</p>
+                <div class="project-links">
+                    <a href="projects/data-lake.html" class="project-link">
+                        <i class="fas fa-external-link-alt"></i> View Details
+                    </a>
+                    <a href="https://github.com/yourusername/data-lake" class="project-link" target="_blank">
+                        <i class="fab fa-github"></i> Source Code
+                    </a>
+                </div>
+            </div>
+            <div class="project">
+                <h3>Named Entity Recognition for Medical Records</h3>
+                <p>Trained a NER model using spaCy to extract key medical information (e.g., diseases, medications) from patient records.</p>
+            </div>
+        </section>
+
+        <section id="medium-blogs">
+            <h2>Medium Blogs</h2>
+            <div class="blog-cards">
+                <div class="blog-card">
+                    <h3>Understanding Transformers in NLP</h3>
+                    <p>Dive into the architecture of transformers and how they revolutionized natural language processing.</p>
+                    <a href="https://medium.com/transformers-nlp" target="_blank" class="read-more">Read More</a>
+                </div>
+                <div class="blog-card">
+                    <h3>Building Scalable Data Pipelines</h3>
+                    <p>A step-by-step guide to designing and implementing efficient data pipelines using Apache Kafka and Spark.</p>
+                    <a href="https://medium.com/scalable-data-pipelines" target="_blank" class="read-more">Read More</a>
+                </div>
+                <div class="blog-card">
+                    <h3>Optimizing Deep Learning Models</h3>
+                    <p>Learn practical tips and tricks to reduce training time and improve model performance.</p>
+                    <a href="https://medium.com/deep-learning-optimization" target="_blank" class="read-more">Read More</a>
+                </div>
+            </div>
+        </section>
+        
+
+       <!--  <section id="education">
+            <h2>Education</h2>
+            <p>B.Tech. in Computer Science Engineering - Bennett University</p>
+        </section> -->
+
+        
+        <section class="contact">
+            <h2>Contact</h2>
+            <p>Email: <code>abhid.cs@outlook.com</code></p>
+            <p>X: <code>@AbhiDas_007</code></p>
+            <!-- <p>LinkedIn: <code>linkedin.com/in/abhidas-007</code></p> -->
+           <!--  <p>GitHub: <code>github.com/johndoe</code></p> -->
+        </section>
+    </main>
+
+    <script>
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const html = document.documentElement;
+        const toggleIcon = darkModeToggle.querySelector('i');
+
+        function updateIcon(isDark) {
+            toggleIcon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark-mode');
+            const isDark = html.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateIcon(isDark);
+        });
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            html.classList.add('dark-mode');
+            updateIcon(true);
+        }
+
+        // Typing effect for the subtitle
+        const subtitle = document.querySelector('.subtitle');
+        const text = subtitle.textContent;
+        subtitle.textContent = '';
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        setTimeout(typeWriter, 1000);
+
+        // Add terminal-style typing effect to headings
+        document.querySelectorAll('h2').forEach(heading => {
+            const prefix = document.createElement('span');
+            prefix.className = 'terminal-prefix';
+            heading.insertBefore(prefix, heading.firstChild);
+        });
+
+        // Update the icon immediately when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                html.classList.add('dark-mode');
+                updateIcon(true);
+            }
+        });
+    </script>
+</body>
+</html>
